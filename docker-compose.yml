@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  main:
+    build: .
+    restart: always
+    environment:
+      HTTP_PORT: 52080
+      HTTPS_PORT: 52443 # comment this if https is not required
+      # VOLUME_PATH: '/app/vol' # Not required because its '/app/vol' by default
+      CERTS_PATH: /etc/letsencrypt/live/ # Will be ignored because LOAD_CERTS_FROM_VOLUME is 1
+      LOAD_CERTS_FROM_VOLUME: 1 # CERTS_PATH will be inherited from VOLUME_PATH
+    networks:
+      - your_network # choose network with your containers
+    volumes:
+      - ../volumes/proxy:/app/vol
+    ports:
+      - 52080:52080
+      - 52443:52443
+
+networks:
+  # choose network with your containers
+  your_network:
+    external: true
