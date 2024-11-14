@@ -12,7 +12,7 @@ services:
     networks:
       - your_network # choose network with your containers
     volumes:
-      - ../volumes/proxy:/app/vol
+      - ./vol:/app/vol
     ports:
       - 52080:52080
       - 52443:52443
