@@ -32,8 +32,8 @@ function getSecureContexts(config: Config, letsencryptPath: string) {
             .filter(([_, value]) => value)
             .map(([key, value]) =>
                 [key, tls.createSecureContext({
-                    key: fs.readFileSync(join(letsencryptPath, value, "/privkey1.pem")),
-                    cert: fs.readFileSync(join(letsencryptPath, value, "/fullchain1.pem")),
+                    key: fs.readFileSync(join(letsencryptPath, value, "/privkey.pem")),
+                    cert: fs.readFileSync(join(letsencryptPath, value, "/fullchain.pem")),
                     ca: null,
                 })])
     )
