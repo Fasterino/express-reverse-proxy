@@ -1,8 +1,8 @@
-import { getHttps } from "./https";
+import { getHttps } from "./https"
 import { createServer as httpServer } from 'http'
-import { Config } from "./config";
-import getProxy from "./proxy";
-import { env } from "./env";
+import { Config } from "./config"
+import getProxy from "./proxy"
+import { env } from "./env"
 
 
 const HTTP_PORT = env.HTTP_PORT(52080),
@@ -23,9 +23,9 @@ async function main() {
 
     httpServer(app).on('upgrade', upgrade).listen(HTTP_PORT, function () {
         console.log("Listening http on port: " + HTTP_PORT)
-    });
+    })
     if (HTTPS_PORT != -1) {
-        const httpsServer = await getHttps(config, CERTS_PATH)
+        const httpsServer = getHttps(config, CERTS_PATH)
         httpsServer(app).on('upgrade', upgrade).listen(HTTPS_PORT, function () {
             console.log("Listening https on port: " + HTTPS_PORT)
         })

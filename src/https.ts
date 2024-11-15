@@ -1,9 +1,9 @@
-import { RequestListener } from "http";
-import https from "https";
-import tls from "tls";
-import fs from "fs";
-import { Config } from "./config";
-import { join } from "path";
+import { RequestListener } from "http"
+import https from "https"
+import tls from "tls"
+import fs from "fs"
+import { Config } from "./config"
+import { join } from "path"
 
 
 export function getHttps(cfg: Config, letsencryptPath: string) {
@@ -13,17 +13,17 @@ export function getHttps(cfg: Config, letsencryptPath: string) {
         // A function that will be called if the client supports SNI TLS extension.
         SNICallback: (domain, cb) => {
 
-            const ctx = secureContexts[domain];
+            const ctx = secureContexts[domain]
 
             if (cb) {
-                ctx ? cb(null, ctx) : cb(Error("No ctx"));
+                ctx ? cb(null, ctx) : cb(Error("No ctx"))
             } else if (ctx) {
-                return ctx;
+                return ctx
             }
         },
-    };
+    }
 
-    return (app: RequestListener) => https.createServer(options, app);
+    return (app: RequestListener) => https.createServer(options, app)
 }
 
 function getSecureContexts(config: Config, letsencryptPath: string) {

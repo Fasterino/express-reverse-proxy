@@ -25,4 +25,4 @@ export const env: Env = new Proxy<Env>({}, {
             }
         }
     }
-});
+})

@@ -1,13 +1,13 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response } from "express"
 
 import { Duplex } from "node:stream"
-import { IncomingMessage } from 'http';
-import httpProxy from 'http-proxy';
-import cors from 'cors';
+import { IncomingMessage } from 'http'
+import httpProxy from 'http-proxy'
+import cors from 'cors'
 
-import { resolve, join } from 'path';
-import { lstat } from 'fs';
-import { Config, ConfigAtPath } from "./config";
+import { resolve, join } from 'path'
+import { lstat } from 'fs'
+import { Config, ConfigAtPath } from "./config"
 
 
 export default function getProxy(cfg: Config) {
@@ -34,8 +34,8 @@ export default function getProxy(cfg: Config) {
             if (req.res)
                 req.res.locals.cors = answer
 
-            callback(null, { origin: answer });
-        };
+            callback(null, { origin: answer })
+        }
 
     function prettyLog(data: any) {
         console.log(JSON.stringify(data, undefined, 2))
@@ -52,7 +52,7 @@ export default function getProxy(cfg: Config) {
 
         if (Config.isStatic(proxyData)) {
             log.PROXY_TYPE = 'STATIC'
-            const path = join(volumePath, proxyData.folder, '/' + req.path.substring(proxyData.exclude));
+            const path = join(volumePath, proxyData.folder, '/' + req.path.substring(proxyData.exclude))
             log.FILE_PATH = path
             lstat(path, (err, stat) => {
                 if (err || !stat.isFile()) {
@@ -60,14 +60,14 @@ export default function getProxy(cfg: Config) {
                     prettyLog(log)
 
                     res.status(404).send('<h1>File not exist</h1>')
-                    return;
+                    return
                 }
                 log.FILE_FOUND = false
                 prettyLog(log)
 
                 res.sendFile(path)
             })
-            return;
+            return
         }
 
         const domain = req.headers.host = proxyData.rewriteDomain ? proxyData.domain : req.hostname
@@ -96,7 +96,7 @@ export default function getProxy(cfg: Config) {
     app.use(cors(corsOptionsDelegate))
 
     app.use((req, res) => {
-        const proxyData = getProxyData(req);
+        const proxyData = getProxyData(req)
         if (proxyData)
             return handleRequest(proxyData, req, res)
 
@@ -114,7 +114,7 @@ export default function getProxy(cfg: Config) {
         app,
         upgrade: (req: IncomingMessage, socket: Duplex, head: Buffer) => {
 
-            const { hostname, pathname: path } = new URL(req.url, `http://${req.headers.host}`);
+            const { hostname, pathname: path } = new URL(req.url, `http://${req.headers.host}`)
             const proxyData = getProxyData({
                 hostname,
                 path
