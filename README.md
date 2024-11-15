@@ -1,6 +1,4 @@
 # NodeJS Reverse Proxy (based on Express)
-
-## Features
 * Compatible with **Docker**
 * Compatible with **HTTPS** protocol
 * Suitable for:
