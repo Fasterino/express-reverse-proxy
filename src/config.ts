@@ -207,7 +207,7 @@ export interface ConfigAtPathStatic {
      * 
      * **Example:** ({"test.com": "/api/": {"folder": "volFolder"}})
      * * *true* - Get **http://test.com/api/test** => Get **./volume/volFolder/test**
-     * * *false* - Get **http://test.com/api/test** => Get **./volume/volFolder/volFolder/test**
+     * * *false* - Get **http://test.com/api/test** => Get **./volume/volFolder/api/test**
      * 
      * **Default:** false
      */
