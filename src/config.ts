@@ -28,7 +28,6 @@ export class Config implements IConfig {
         return {
             domains: {
                 "test.com": {
-                    [CERT_NAME]: "test.com",
                     "/": {
                         domain: "web-docker-container",
                         port: 8080
@@ -41,7 +40,6 @@ export class Config implements IConfig {
                     },
                 },
                 "mirror.test.com": {
-                    [CERT_NAME]: "test.com",
                     "/": {
                         domain: "test.cc",
                         https: true,
@@ -50,7 +48,7 @@ export class Config implements IConfig {
                     }
                 },
                 "static.test.com": {
-                    [CERT_NAME]: "test.com",
+                    [CERT_NAME]: "custom-certificate-folder",
                     "/": {
                         folder: "volFolder",
                         cors: '*'
@@ -106,6 +104,7 @@ export class Config implements IConfig {
                         key,
                         typeof val[CERT_NAME] == 'string' ? val[CERT_NAME] : null
                     ])
+                .filter(([_, value]) => value)
         )
     }
 

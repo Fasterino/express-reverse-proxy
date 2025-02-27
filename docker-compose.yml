@@ -9,6 +9,7 @@ services:
       # VOLUME_PATH: '/app/vol' # Not required because its '/app/vol' by default
       CERTS_PATH: /etc/letsencrypt/live/ # Will be ignored because LOAD_CERTS_FROM_VOLUME is 1
       LOAD_CERTS_FROM_VOLUME: 1 # CERTS_PATH will be inherited from VOLUME_PATH
+      AUTO_CERTS: 1 # Generate a cert for domain if field 'cert-name' is missed
     networks:
       - your_network # choose network with your containers
     volumes:

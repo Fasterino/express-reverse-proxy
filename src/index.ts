@@ -8,6 +8,7 @@ import { env } from "./env"
 const HTTP_PORT = env.HTTP_PORT(52080),
     HTTPS_PORT = env.HTTPS_PORT(-1),
     VOLUME_PATH = env.VOLUME_PATH('./vol'),
+    AUTO_CERTS = env.AUTO_CERTS(1) != 0,
     CERTS_PATH = env.LOAD_CERTS_FROM_VOLUME(0) ? VOLUME_PATH : env.CERTS_PATH('/etc/letsencrypt/live/')
 
 console.log("ENV Loaded:", {
@@ -25,7 +26,7 @@ async function main() {
         console.log("Listening http on port: " + HTTP_PORT)
     })
     if (HTTPS_PORT != -1) {
-        const httpsServer = getHttps(config, CERTS_PATH)
+        const httpsServer = getHttps(config, CERTS_PATH, AUTO_CERTS)
         httpsServer(app).on('upgrade', upgrade).listen(HTTPS_PORT, function () {
             console.log("Listening https on port: " + HTTPS_PORT)
         })

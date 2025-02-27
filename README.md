@@ -39,11 +39,12 @@ const config: {
 type Domain = {
   /**
    * Name of folder with domain certificates
+   * If you leave it blank and AUTO_CERTS - 1, certificate will be generated automatically
    * Will use this two files:
    * * %CERTS_PATH%/%cert-name%/privkey.pem
    * * %CERTS_PATH%/%cert-name%/fullchain.pem
    */
-  'cert-name': string 
+  'cert-name'?: string 
 } & {
   [path: string]: StaticProxyInfo | DynamicProxyInfo
 }
