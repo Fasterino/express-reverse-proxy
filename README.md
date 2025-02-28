@@ -132,7 +132,7 @@ type DynamicProxyInfo = {
     /**
      * Remove path from request path
      * 
-     * **Example:** ({"test.com": "/api/": {"domain": "localhost"}})
+     * **Example:** ({"test.com": {"/api/": {"domain": "localhost"}})
      * * *true* - Get **http://test.com/api/test** => Get **http:/localhost/test**
      * * *false* - Get **http://test.com/api/test** => Get **http:/localhost/api/test**
      * 
