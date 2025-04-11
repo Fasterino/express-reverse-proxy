@@ -52,17 +52,36 @@ export default function getProxy(cfg: Config) {
 
         if (Config.isStatic(proxyData)) {
             log.PROXY_TYPE = 'STATIC'
-            const path = join(volumePath, proxyData.folder, '/' + req.path.substring(proxyData.exclude))
+            let path = join(volumePath, proxyData.folder, req.path.substring(proxyData.exclude))
             log.FILE_PATH = path
             lstat(path, (err, stat) => {
                 if (err || !stat.isFile()) {
+                    if (!err && stat.isDirectory()) {
+                        path = join(path, 'index.html')
+
+                        lstat(path, (err, stat) => {
+                            if (err || !stat.isFile()) {
+                                log.FILE_FOUND = false
+                                prettyLog(log)
+
+                                res.status(404).send('<h1>File not exist</h1>')
+                                return
+                            }
+
+                            log.FILE_FOUND = true
+                            prettyLog(log)
+
+                            res.sendFile(path)
+                        })
+                        return
+                    }
                     log.FILE_FOUND = false
                     prettyLog(log)
 
                     res.status(404).send('<h1>File not exist</h1>')
                     return
                 }
-                log.FILE_FOUND = false
+                log.FILE_FOUND = true
                 prettyLog(log)
 
                 res.sendFile(path)
